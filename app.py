@@ -28,8 +28,12 @@ def get_leiden_pararius_page_source(page_number: int):
 #
 def handler(event, context):
 
+    page_source = get_leiden_pararius_page_source(1)
+    
     return {
         'statusCode': 200,
         'headers': headers,
-        'body': json.dumps('it works')
+        'body': json.dumps(
+            {'page_source': page_source}
+        )
     }
