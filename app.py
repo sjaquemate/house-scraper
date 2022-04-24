@@ -25,7 +25,7 @@ def get_leiden_pararius_page_source(page_number: int):
     time.sleep(10)
     return driver.page_source
 
-
+#
 def handler(event, context):
 
     return {
