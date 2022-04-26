@@ -12,10 +12,13 @@ load_dotenv(find_dotenv())
 
 
 def email_houses(houses: list[House]) -> None:
-    content = ''
+    content = 'Here they are: \n\n'
     for house in houses:
-        content += '\n'.join([house.link]) + '\n\n'
-
+        content += '\n'.join([house.link, house.name, house.price, house.makelaar, str(house.timestamp)]) + '\n\n'
+    content += 'Goodluck!'
+    
+    content = content.encode("ascii", "ignore").decode()  # remove non-ascii characters
+    
     yahoo_mail.send_email(
         yahoo_email=os.environ.get('YAHOO_EMAIL'),
         yahoo_app_password=os.environ.get('YAHOO_APP_PASSWORD'),
@@ -37,8 +40,8 @@ def scrape_loop(scraper: ParariusScraper, dbqueries: DBQueries) -> None:
     new_houses = dbqueries.get_houses_after_timestamp(last_email_timestamp)
 
     dbqueries.add_attempt(Attempt(timestamp=current_timestamp,
-                                  total_houses=len(houses),
-                                  totalnum_new_houses=len(new_houses)))
+                                  num_houses=len(houses),
+                                  num_new_houses=len(new_houses)))
 
     if new_houses:
         email_houses(new_houses)
