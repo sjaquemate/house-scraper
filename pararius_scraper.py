@@ -46,7 +46,7 @@ class ParariusScraper:
         self.driver = get_local_chrome_driver()
         
     def get_leiden_pararius_page_source(self, page_number: int) -> str:
-        url = f'https://www.pararius.nl/huurwoningen/leiden/900-1500/page-{page_number}'
+        url = f'https://www.pararius.nl/huurwoningen/leiden/900-1700/page-{page_number}'
 
         self.driver.get(url)
         time.sleep(10)
