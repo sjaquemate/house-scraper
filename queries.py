@@ -5,6 +5,7 @@ from sqlalchemy.sql import func
 from datetime import datetime
 from tables.houses import House
 from tables.emails import Email
+from tables.attempts import Attempt
 
 class DBQueries:
     
@@ -24,6 +25,10 @@ class DBQueries:
     
     def add_email(self, email: Email) -> None:
         self.session.add(email)
+        self.session.commit()
+        
+    def add_attempt(self, attempt: Attempt) -> None:
+        self.session.add(attempt)
         self.session.commit()
         
     def get_last_email_timestamp(self) -> datetime:
