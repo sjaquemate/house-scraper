@@ -5,7 +5,7 @@ Base = declarative_base()
 
 class Attempt(Base):
     __tablename__ = 'attempts'
-    timestamp = Column(TIMESTAMP)
+    timestamp = Column(TIMESTAMP, primary_key=True)
     total_houses = Column(Integer)
     num_new_houses = Column(Integer)
     

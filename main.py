@@ -7,12 +7,8 @@ import yahoo_mail
 import os
 from datetime import datetime
 from dotenv import load_dotenv, find_dotenv
-import logging
 import time
 load_dotenv(find_dotenv())
-
-logging.basicConfig(level=logging.DEBUG,
-                    filename=os.environ.get("LOGGING_FILEPATH"))
 
 
 def email_houses(houses: list[House]) -> None:
@@ -33,7 +29,6 @@ def scrape_loop(scraper: ParariusScraper, dbqueries: DBQueries) -> None:
 
     current_timestamp = datetime.now()
     houses = scraper.scrape()
-    logging.debug(f"Scraped {len(houses)} houses from Pararius.")
 
     for house in houses:
         dbqueries.add_house_if_not_exists(house)
@@ -47,11 +42,7 @@ def scrape_loop(scraper: ParariusScraper, dbqueries: DBQueries) -> None:
 
     if new_houses:
         email_houses(new_houses)
-        dbqueries.add_email(Email(address=os.environ.get(
-            "TO_EMAIL"), timestamp=datetime.now()))
-        logging.debug(f"Found {len(new_houses)} new houses and emailed them!")
-    else:
-        logging.debug("Found no new houses.")
+        dbqueries.add_email(Email(address=os.environ.get("TO_EMAIL"), timestamp=current_timestamp))
 
 
 def main():
